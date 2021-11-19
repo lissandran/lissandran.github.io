@@ -4,7 +4,7 @@ name: AUTOMATIC_DEPLOY
 on:
   push:
     branches:
-      - main  # 當main分支有push操作時
+      - main  # main分支有push操作时触发
 
 jobs:
   deploy:
@@ -12,14 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true  # 找尋Hugo主題(true OR recursive)
+          submodules: true  # 找Hugo主題(true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.89.4' # hugo 版本
-          extended: true  # 如果是使用extended版本的務必取消註解。
+          extended: true  # 非extended版本注释该行
 
       - name: Build
         run: hugo --minify --theme book
@@ -29,5 +29,5 @@ jobs:
         with:
           github_token: ${{ secrets.HUGO_DEPLOY_TOKEN }}
           PUBLISH_BRANCH: gh-pages  # 推送到 gh-pages 分支
-          PUBLISH_DIR: ./public     # hugo 生成的目錄
+          PUBLISH_DIR: ./public     # hugo 生成的目录
           commit_message: ${{ github.event.head_commit.message }}
